@@ -8,7 +8,8 @@ import DisplayBalance from "./components/DisplayBalance";
 import DisplayBalances from "./components/DisplayBalances";
 import EntryLines from "./components/EntryLines";
 import ModalEdit from "./components/ModelEdit";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllEntries } from "./actions/entries.action";
 
 function App() {
   const [incomeTotal, setincomeTotal] = useState(0);
@@ -21,7 +22,7 @@ function App() {
   useEffect(() => {
     const index = entries.findIndex((entry) => entry.id === id);
     setEntry(entries[index]);
-  }, [isOpen, id]);
+  }, [isOpen, id, entries]);
 
   useEffect(() => {
     let totalIncome = 0;
@@ -36,6 +37,12 @@ function App() {
     setExpenseTotal(totalExpense);
     setincomeTotal(totalIncome);
   }, [entries]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllEntries());
+  }, []);
 
   return (
     <Container>
